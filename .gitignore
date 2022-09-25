@@ -1,0 +1,5 @@
+build/*.o
+.vscode
+src/libft/*.o
+build
+philo
