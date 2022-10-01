@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:44:13 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/29 20:00:14 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:22:28 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 time_t	get_time_ms(void)
 {
-	struct timeval t;
-	long	ret_time;
-	//static int	reinder,
+	struct timeval	t;
+	long			ret_time;
 
 	if (gettimeofday(&t, NULL))
 		return (0);
@@ -24,18 +23,14 @@ time_t	get_time_ms(void)
 		ret_time = (t.tv_sec * 1000) + (t.tv_usec / 1000) + 1;
 	else
 		ret_time = (t.tv_sec * 1000) + (t.tv_usec / 1000);
-	// printf("lost time: %d usec\n", t.tv_usec % 1000);
-	// printf("sec time: %ld usec\n", t.tv_sec);
-	// printf("usec time: %d usec\n", t.tv_usec);
-	// printf("total  msec: %ld usec\n", (t.tv_sec * 1000) + (t.tv_usec / 1000));
-	return(ret_time);
+	return (ret_time);
 }
 
 void	*lock_print_state(void *datum)
 {
-	t_id *gp;
+	t_id	*gp;
 
-	gp = (t_id*)datum;
+	gp = (t_id *)datum;
 	while (1)
 	{
 		print_state(gp, MSG_THINK);
@@ -47,18 +42,18 @@ void	*lock_print_state(void *datum)
 		sem_post(gp->sem_lock_fork);
 		gp->lt_eat = print_state(gp, MSG_EAT);
 		gp->eat_count++;
-		usleep(gp->gdata->tm_eat * 1000);
+		my_sleep(gp->gdata->tm_eat);
 		sem_post(gp->sem_fork);
 		sem_post(gp->sem_fork);
 		if (gp->eat_count == gp->gdata->n_eat)
 			exit(ALL_EATEN);
 		print_state(gp, MSG_SLEEP);
-		usleep(gp->gdata->tm_sleep * 1000);
+		my_sleep(gp->gdata->tm_sleep);
 	}
-	return(0);
+	return (0);
 }
 
-time_t	print_state(t_id *gp, char* msg)
+time_t	print_state(t_id *gp, char *msg)
 {
 	time_t	stamp;
 
@@ -84,20 +79,20 @@ void	check_state(t_id *phl)
 	}
 }
 
-int parent_watch(t_id phl)
+int	parent_watch(t_id phl)
 {
 	int		stat_loc;
 	int		wait_ret;
-	int		n_eaten = 0;
+	int		n_eaten;
 
+	n_eaten = 0;
 	while (1)
 	{
-		wait_ret  = waitpid(0, &stat_loc, WUNTRACED);
+		wait_ret = waitpid(0, &stat_loc, WUNTRACED);
 		if (wait_ret == -1)
-			return(ERR);
+			return (ERR);
 		if (WIFSIGNALED(stat_loc))
 			kill_children(phl, ERR, wait_ret);
-			//return (ERR);
 		if (WEXITSTATUS(stat_loc) == ALL_EATEN)
 			n_eaten++;
 		if (WEXITSTATUS(stat_loc) == DEATH)

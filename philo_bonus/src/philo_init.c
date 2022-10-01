@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:15:22 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/30 17:59:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:16:23 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	init_philo(t_id *phl, t_data *gdata)
 	phl->gdata = gdata;
 	phl->lt_eat = 0;
 	phl->died = FALSE;
-	phl->ch_pid =  malloc(sizeof(pid_t) * phl->gdata->nb_philo);
+	phl->ch_pid = malloc(sizeof(pid_t) * phl->gdata->nb_philo);
 	if (phl->ch_pid == NULL)
 		return (ERR);
 	return (0);

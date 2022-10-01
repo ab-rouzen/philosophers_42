@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:15:22 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/30 12:04:49 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/01 14:45:32 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	init_args(t_data *data, char **args)
 	data->tm_eat = ft_atoi(args[3]);
 	data->tm_sleep = ft_atoi(args[4]);
 	data->n_full_eat = 0;
-	data->finish = 1;
+	data->alive = TRUE;
 	if (args[5])
 		data->n_eat = ft_atoi(args[5]);
 	else

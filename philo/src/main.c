@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:07:46 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/30 12:04:14 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/01 15:41:24 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char *av[])
 {
 	t_id	*phl;
 	t_data	gdata;
+	int		retval;
 
 	if (ac != 5 && ac != 6)
 		return (ERR);
@@ -27,7 +28,41 @@ int	main(int ac, char *av[])
 		return (ERR);
 	if (init_philo(phl, &gdata) || spawn_philo(phl))
 		return (ERR);
-	return (check_state(phl));
+	detach_threads(phl);
+	retval = check_state(phl);
+	exit_threads(phl);
+	return (retval);
+}
+
+void	detach_threads(t_id *phl)
+{
+	int	i;
+
+	i = 0;
+	while (i < phl->gdata->nb_philo)
+	{
+		pthread_detach(phl[i].t_id);
+		i++;
+	}
+}
+
+void	exit_threads(t_id *phl)
+{
+	int	i;
+
+	i = 0;
+	while (i < phl->gdata->nb_philo)
+	{
+		pthread_join(phl[i].t_id, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < phl->gdata->nb_philo)
+	{
+		pthread_mutex_destroy(&phl->gdata->mtx[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&phl->gdata->print_mtx);
 }
 
 void	*philo(void *datum)
@@ -47,7 +82,6 @@ void	*philo(void *datum)
 	gp->t_spawn = get_time_ms();
 	if (!gp->t_spawn)
 		return (NULL);
-	while (1)
-		lock_print_state(gp, id, s_fork);
+	lock_print_state(gp, id, s_fork);
 	return (NULL);
 }
