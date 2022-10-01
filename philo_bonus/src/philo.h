@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 15:51:52 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/29 19:36:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/09/30 17:33:17 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct		 s_id
 {
 	t_data			*gdata;
 	int				ph_id;
+	pid_t			pid;
 	pid_t			*ch_pid;
 	sem_t			*sem_fork;
 	sem_t			*sem_print;
@@ -75,6 +76,7 @@ int		create_sem(t_id *phl);
 void	check_state(t_id *phl);
 void	kill_children(t_id phl, int exit_code, pid_t sender_child);
 void	child_rt(t_id *phl, int id);
+void	exit_routine(t_id phl,int exit_code);
 
 
 #endif

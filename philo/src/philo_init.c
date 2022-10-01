@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:15:22 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/27 11:25:13 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/09/30 12:04:49 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ int	init_args(t_data *data, char **args)
 	data->finish = 1;
 	if (args[5])
 		data->n_eat = ft_atoi(args[5]);
-	else 
+	else
 		data->n_eat = 0;
-		
 	return (0);
 }
 

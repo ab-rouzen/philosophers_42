@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:07:46 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/27 11:22:32 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/09/30 12:04:14 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ void	*philo(void *datum)
 	int		s_fork;
 	int		id;
 
-	gp = (t_id*)datum;
+	gp = (t_id *)datum;
 	id = gp->ph_id;
 	gp->eat_count = 0;
+	gp->lt_eat = 0;
 	if (id != 1)
 		s_fork = id - 1;
 	else
-		s_fork = gp->gdata->nb_philo; 
+		s_fork = gp->gdata->nb_philo;
 	gp->t_spawn = get_time_ms();
 	if (!gp->t_spawn)
 		return (NULL);

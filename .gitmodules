@@ -1,3 +1,3 @@
-[submodule "src/libft"]
-	path = src/libft
+[submodule "lib/libft"]
+	path = lib/libft
 	url = git@github.com:ab-rouzen/libft_1337.git

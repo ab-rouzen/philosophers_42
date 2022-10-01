@@ -6,11 +6,20 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:07:46 by arouzen           #+#    #+#             */
-/*   Updated: 2022/09/29 18:52:30 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/09/30 17:59:49 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
+void	exit_routine(t_id phl,int exit_code)
+{
+	sem_close(phl.sem_fork);	
+	sem_close(phl.sem_print);	
+	sem_close(phl.sem_lock_fork);
+	exit(exit_code);
+}
 
 int	main(int ac, char *av[])
 {
@@ -23,6 +32,7 @@ int	main(int ac, char *av[])
 		return (ERR);
 	if (load_args(&gdata, av) || phl.gdata->nb_philo > SEM_VALUE_MAX)
 		return (ERR);
+	printf("LINE is %d\n", __LINE__);
 	if (init_philo(&phl, &gdata) || create_sem(&phl))
 		return (ERR);
 	while (i < gdata.nb_philo)
@@ -31,7 +41,6 @@ int	main(int ac, char *av[])
 		if (phl.ch_pid[i] == 0)
 			child_rt(&phl, i + 1);
 		i++;
-		//printf("i is %d\n", i);
 	}
 	parent_watch(phl);
 	return (0);
@@ -39,9 +48,9 @@ int	main(int ac, char *av[])
 
 int	create_sem(t_id *phl)
 {
-	if (sem_unlink(SMP_PRINT) || sem_unlink(SMP_FORK) || sem_unlink(SMP_LOCK))
-		return (ERR);
-	//printf("been here %d\n", phl.gdata->nb_philo);
+	sem_unlink(SMP_PRINT);
+	sem_unlink(SMP_FORK);
+	sem_unlink(SMP_LOCK);
 	phl->sem_fork = sem_open(SMP_PRINT, O_CREAT, S_IRWXU, phl->gdata->nb_philo);
 	if (phl->sem_fork == SEM_FAILED)
 		return (ERR);
