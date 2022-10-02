@@ -3,7 +3,7 @@
 NAME = philo
 CC = gcc
 M_INCL = ./src/philo.h
-FALGS = -Wall -Wextra -Werror
+FALGS = -Wall -Wextra -Werror -g
 M_SRC_NAME = main philo_utils philo_init philo_threads_op
 BUILD_DIR = build/
 M_SRC_DIR  = src/

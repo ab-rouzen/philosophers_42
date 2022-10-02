@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 15:51:52 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/01 16:21:42 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/02 11:41:05 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ typedef struct s_id
 	sem_t			*sem_fork;
 	sem_t			*sem_print;
 	sem_t			*sem_lock_fork;
-	time_t			t_spawn;
-	time_t			lt_eat;
+	double			t_spawn;
+	double			lt_eat;
 	t_bool			died;
 	int				eat_count;
 }					t_id;
 
 void	*philo(void *datum);
-time_t	get_time_ms(void);
+double	get_time_ms(void);
 void	*lock_print_state(void *datum);
 time_t	print_state(t_id *gp, char *msg);
 int		spawn_philo(t_id *phl);

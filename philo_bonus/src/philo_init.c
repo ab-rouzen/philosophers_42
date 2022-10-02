@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:15:22 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/01 16:16:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/02 11:45:40 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	load_args(t_data *data, char **args)
 	if (check_number(args))
 		return (ERR);
 	data->nb_philo = ft_atoi(args[1]);
+	if (data->nb_philo == 0)
+		return (ERR);
 	data->tm_die = ft_atoi(args[2]);
 	data->tm_eat = ft_atoi(args[3]);
 	data->tm_sleep = ft_atoi(args[4]);

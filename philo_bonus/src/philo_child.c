@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 16:37:09 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/01 16:21:32 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/02 13:14:14 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	my_sleep(time_t slp)
 	double	end;
 
 	end = get_time_ms() + slp;
+	usleep(slp * 0.95 * 1000);
 	while (1)
 	{
-		usleep(100);
+		usleep(1);
 		if (get_time_ms() >= end)
 			return ;
 	}

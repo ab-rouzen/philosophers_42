@@ -6,23 +6,19 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:44:13 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/01 16:22:28 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/02 13:17:05 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-time_t	get_time_ms(void)
+double	get_time_ms(void)
 {
 	struct timeval	t;
-	long			ret_time;
+	double			ret_time;
 
-	if (gettimeofday(&t, NULL))
-		return (0);
-	if (t.tv_usec % 1000 > 500)
-		ret_time = (t.tv_sec * 1000) + (t.tv_usec / 1000) + 1;
-	else
-		ret_time = (t.tv_sec * 1000) + (t.tv_usec / 1000);
+	gettimeofday(&t, NULL);
+	ret_time = (t.tv_sec * 1000) + (double)t.tv_usec / 1000;
 	return (ret_time);
 }
 
@@ -57,8 +53,8 @@ time_t	print_state(t_id *gp, char *msg)
 {
 	time_t	stamp;
 
-	stamp = get_time_ms() - gp->t_spawn;
 	sem_wait(gp->sem_print);
+	stamp = get_time_ms() - gp->t_spawn;
 	printf("%ld %d %s\n", stamp, gp->ph_id, msg);
 	if (!ft_strncmp(msg, MSG_DIED, 20))
 		exit(DEATH);
@@ -73,7 +69,7 @@ void	check_state(t_id *phl)
 	time_to_die = phl->gdata->tm_die;
 	while (1)
 	{
-		usleep(250);
+		usleep(1500);
 		if (get_time_ms() - phl->t_spawn > phl->lt_eat + time_to_die)
 			print_state(phl, MSG_DIED);
 	}

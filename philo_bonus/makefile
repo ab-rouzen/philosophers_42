@@ -3,7 +3,7 @@
 B_NAME = philo_bonus
 CC = gcc
 B_INCL = ./src/philo.h
-FALGS = -Wall -Wextra -Werror
+FALGS = -Wall -Wextra -Werror -g
 B_SRC_NAME = main philo_utils philo_init philo_child
 BUILD_DIR = build/
 B_SRC_DIR  = src/

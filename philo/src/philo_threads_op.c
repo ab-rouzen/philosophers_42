@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:45:13 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/01 15:46:54 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/02 13:17:39 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ double	print_state(t_id *gp, char *msg)
 {
 	double	stamp;
 
-	stamp = get_time_ms() - gp->t_spawn;
 	pthread_mutex_lock(&gp->gdata->print_mtx);
+	stamp = get_time_ms() - gp->t_spawn;
 	if (gp->gdata->alive)
 		printf("%ld %d %s\n", (long)stamp, gp->ph_id, msg);
 	else if (!ft_strncmp(msg, MSG_DIED, 20))
+	{	
 		printf("%ld %d %s\n", (long)stamp, gp->ph_id, msg);
+		return (stamp);
+	}
 	pthread_mutex_unlock(&gp->gdata->print_mtx);
 	return (stamp);
 }
